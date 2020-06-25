@@ -59,7 +59,7 @@ class YnbBot(Bot):
         logger.info(f"Starting Time: {datetime.now()}\n")
         logger.info("Loading cogs...")
 
-        self.load_extension("cogs.clean")
+        self.load_extension("ynb-bot.cogs.clean")
 
         logger.info("Loading cogs... DONE")
 
