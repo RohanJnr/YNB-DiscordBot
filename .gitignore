@@ -1,9 +1,10 @@
 # config files
-
 conf.json
 
-# pycharm files
+#log files
+logs/
 
+# pycharm files
 .idea
 
 # Byte-compiled / optimized / DLL files

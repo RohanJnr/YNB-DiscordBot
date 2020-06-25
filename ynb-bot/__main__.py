@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime
 from json import load
+from pathlib import Path
 
 
 from discord import Game
@@ -20,7 +21,17 @@ formatter = logging.Formatter('{asctime} - {name} - {levelname} - {message}', st
 console_logging = logging.StreamHandler()
 console_logging.setFormatter(formatter)
 
+today = datetime.today()
+
+log_file = Path("logs", f"logging{str(today)}.txt")
+
+log_file.parent.mkdir(exist_ok=True)
+
+file_logging = logging.FileHandler(log_file)
+file_logging.setFormatter(formatter)
+
 logger.addHandler(console_logging)
+logger.addHandler(file_logging)
 
 # Silence most of discord logs.
 
