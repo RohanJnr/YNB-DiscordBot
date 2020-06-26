@@ -21,7 +21,7 @@ class Clean(Cog):
     def time_until_midnight() -> int:
         """Calculate time until UTC midnight."""
         now: datetime = datetime.utcnow()
-        midnight_time: time = time(23, 59, 59)
+        midnight_time: time = time(19, 0, 0)
         midnight: datetime = datetime.combine(now, midnight_time)
 
         return (midnight - now).seconds
