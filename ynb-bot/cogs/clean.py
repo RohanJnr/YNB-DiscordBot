@@ -9,7 +9,6 @@ from discord.ext.commands import Bot, Cog
 
 logger = logging.getLogger("bot." + __name__)
 
-ONE_DAY: timedelta = timedelta(days=1)
 ONE_WEEK: timedelta = timedelta(days=7)
 
 
@@ -44,13 +43,11 @@ class Clean(Cog):
 
             current_time: datetime = datetime.utcnow()
 
-            day_before: datetime = current_time - ONE_DAY
             week_before: datetime = current_time - ONE_WEEK
 
             deleted_messages: list = await gallery_channel.purge(
                 limit=None,
                 check=filter_msgs,
-                before=day_before,
                 after=week_before
             )
 
