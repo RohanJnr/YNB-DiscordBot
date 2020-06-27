@@ -60,7 +60,8 @@ class YnbBot(Bot):
         logger.info("Loading cogs...")
 
         self.load_extension("ynb-bot.cogs.clean")
-        self.load_extension("ynb-bot.cogs.chess_com_api")
+        self.load_extension("ynb-bot.cogs.server_info")
+        self.load_extension("ynb-bot.cogs.error_handler")
 
         logger.info("Loading cogs... DONE")
 
