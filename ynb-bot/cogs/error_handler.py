@@ -19,6 +19,7 @@ class ErrorHandler(commands.Cog):
         await ctx.send(f"```{error}```")
 
 
+
 def setup(bot):
     bot.add_cog(ErrorHandler(bot))
     logger.info("ErrorHandler Cog loaded")

@@ -62,8 +62,9 @@ class YnbBot(Bot):
         self.load_extension("ynb-bot.cogs.clean")
         self.load_extension("ynb-bot.cogs.server_info")
         self.load_extension("ynb-bot.cogs.error_handler")
+        self.load_extension("ynb-bot.cogs.lichess_api")
 
-        logger.info("Loading cogs... DONE")
+        logger.info("Loading cogs... DONE\n")
 
         await self.change_presence(activity=Game(name="You Need Beer!"))
 
