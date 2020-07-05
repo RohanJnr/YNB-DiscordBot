@@ -63,6 +63,7 @@ class YnbBot(Bot):
         self.load_extension("ynb-bot.cogs.server_info")
         self.load_extension("ynb-bot.cogs.error_handler")
         self.load_extension("ynb-bot.cogs.lichess_api")
+        self.load_extension("ynb-bot.cogs.admin_cmds")
 
         logger.info("Loading cogs... DONE\n")
 
