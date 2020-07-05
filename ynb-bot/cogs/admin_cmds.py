@@ -29,6 +29,10 @@ class AdminCmds(Cog):
             days_present: timedelta = today - member_join_date
 
             roles_id: list = [role.id for role in member.roles]
+
+            if verified_role_id in roles_id:
+                continue
+
             if smp_role_id in roles_id:
                 if days_present.days > 29:
                     verified_role: Role = guild.get_role(verified_role_id)
@@ -38,10 +42,10 @@ class AdminCmds(Cog):
                 else:
                     pass
 
-        msg: str = f"**{len(nverfied_members)} have been given the verified role.**\n\n"
+        msg: str = f"```**{len(nverfied_members)} members have been given the verified role.**\n\n"
         for m in nverfied_members:
-            msg += m
-
+            msg += f"{m}\n"
+        msg += "```"
         await reporting_channel.send(msg)
 
 
