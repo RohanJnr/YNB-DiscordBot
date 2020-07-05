@@ -30,7 +30,7 @@ class LichessAPI(Cog):
             async with session.get(url=url, params=params, headers=headers) as response:
                 return await response.json(content_type=None)
         except Exception as e:
-            logger.error(f"API request error: {str(e)}")
+            logger.error(f"API request error: {e}")
             return None
 
     async def _get_user(self, username: str) -> Union[dict, None]:
@@ -167,7 +167,7 @@ class LichessAPI(Cog):
         """Check status of each user and send link for on-going games."""
         logger.info("Lichess - Get Ongoing Games loop running...")
         chess_channel: TextChannel = self.bot.get_channel(self.bot.conf["CHESS_CHANNEL_ID"])
-        games: Dict[str: bool] = {}
+        games: list = []
         while not self.bot.is_closed():
             async with aiohttp.ClientSession() as session:
                 usernames: str = ",".join(list(self.linked_users.keys()))
@@ -179,18 +179,16 @@ class LichessAPI(Cog):
                 for user_status in all_users_status:
                     if "playing" in user_status:
                         fetch_game_url: str = f"https://lichess.org/api/user/{user_status['name']}/current-game"
-                        response: Union[dict] = await self.fetch(session, fetch_game_url)
+                        response: Union[dict, None] = await self.fetch(session, fetch_game_url)
                         if not response:
                             continue
                         game_id: int = response["id"]
                         game_url: str = f"https://lichess.org/{game_id}"
                         if game_url not in games:
-                            games[game_url] = False
-                        else:
-                            if not games[game_url]:
-                                msg: str = f"On Going Match! Spectate now!\n{game_url}"
-                                logger.info(f"Lichess Live game found: {game_url}")
-                                await chess_channel.send(msg)
+                            games.append(game_url)
+                            msg: str = f"On Going Match! Spectate now!\n{game_url}"
+                            logger.info(f"Lichess Live game found: {game_url}")
+                            await chess_channel.send(msg)
 
             await asyncio.sleep(10)
 
