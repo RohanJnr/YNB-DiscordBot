@@ -16,6 +16,7 @@ class AdminCmds(Cog):
     @command(name="update-verified")
     @has_role(554485497192513540)
     async def assing_verified_role(self, ctx):
+        """Assign the verified role to members who have been on the server for more than 30 days."""
         reporting_channel: TextChannel = await self.bot.fetch_channel(self.bot.conf["BOT_STATS_ID"])
         smp_role_id: int = 489176009120415744
         verified_role_id: int = 705274433723564083
