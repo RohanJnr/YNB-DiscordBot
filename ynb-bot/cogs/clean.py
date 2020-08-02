@@ -3,7 +3,7 @@ import logging
 from datetime import datetime, timedelta, time
 from pathlib import Path
 
-from discord import TextChannel, Message, Embed, Colour, HTTPException
+from discord import TextChannel, Message, Embed, Colour, HTTPException, File
 from discord.ext.commands import Bot, Cog
 
 
@@ -67,6 +67,9 @@ class Clean(Cog):
                         logger.warning("Embed Body too long for reporting message, sending file instead.")
                         deleted_messages_file = Path("deleted_messages.txt")
                         deleted_messages_file.write_text(embed.description)
+                        file_object = File(fp=str(deleted_messages_file), filename="Deleted messages")
+                        await reporting_channel.send(file=file_object)
+
 
             else:
                 await reporting_channel.send("0 Messages have been deleted.")
