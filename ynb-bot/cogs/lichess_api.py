@@ -176,19 +176,20 @@ class LichessAPI(Cog):
                     "ids": usernames
                 }
                 all_users_status: dict = await self.fetch(session, url, params)
-                for user_status in all_users_status:
-                    if "playing" in user_status:
-                        fetch_game_url: str = f"https://lichess.org/api/user/{user_status['name']}/current-game"
-                        response: Union[dict, None] = await self.fetch(session, fetch_game_url)
-                        if not response:
-                            continue
-                        game_id: int = response["id"]
-                        game_url: str = f"https://lichess.org/{game_id}"
-                        if game_url not in games:
-                            games.append(game_url)
-                            msg: str = f"On Going Match! Spectate now!\n{game_url}"
-                            logger.info(f"Lichess Live game found: {game_url}")
-                            await chess_channel.send(msg)
+                if all_users_status is not None:
+                    for user_status in all_users_status:
+                        if "playing" in user_status:
+                            fetch_game_url: str = f"https://lichess.org/api/user/{user_status['name']}/current-game"
+                            response: Union[dict, None] = await self.fetch(session, fetch_game_url)
+                            if not response:
+                                continue
+                            game_id: int = response["id"]
+                            game_url: str = f"https://lichess.org/{game_id}"
+                            if game_url not in games:
+                                games.append(game_url)
+                                msg: str = f"On Going Match! Spectate now!\n{game_url}"
+                                logger.info(f"Lichess Live game found: {game_url}")
+                                await chess_channel.send(msg)
 
             await asyncio.sleep(10)
 
