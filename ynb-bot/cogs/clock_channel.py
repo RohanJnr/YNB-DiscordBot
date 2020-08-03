@@ -14,7 +14,7 @@ CLOCK_EMOJIS: typing.Dict[str: str] = {
     "clock1230": "\U0001f567",
     "clock1": "\U0001f550",
     "clock130": "\U0001f55c",
-    "clock2": "🕐\U0001f551",
+    "clock2": "\U0001f551",
     "clock230": "\U0001f55d",
     "clock3": "\U0001f552",
     "clock330": "\U0001f55e",
@@ -67,7 +67,7 @@ class ClockChannel(Cog):
 
             channel: TextChannel = await self.bot.fetch_channel(clock_channel_id)
             await channel.edit(name=channel_name)
-            await asyncio.sleep(60*10)
+            await asyncio.sleep(60*5)
 
 
 def setup(bot: Bot) -> None:
