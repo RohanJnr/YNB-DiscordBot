@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import typing
 from datetime import datetime
 
 from discord import TextChannel
@@ -9,7 +8,7 @@ from discord.ext.commands import Bot, Cog
 
 logger = logging.getLogger("bot." + __name__)
 
-CLOCK_EMOJIS: typing.Dict[str: str] = {
+CLOCK_EMOJIS: dict = {
     "clock12": "\U0001f55b",
     "clock1230": "\U0001f567",
     "clock1": "\U0001f550",
@@ -53,6 +52,8 @@ class ClockChannel(Cog):
             minutes: int = utc_time.minute
 
             time_to_display: str = f"{hour}:{minutes}"
+            if minutes < 10:
+                time_to_display: str = f"{hour}:0{minutes}"
 
             if hour > 12:
                 hour = hour-12
