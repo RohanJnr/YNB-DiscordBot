@@ -2,7 +2,7 @@ import asyncio
 import logging
 from datetime import datetime
 
-from discord import TextChannel
+from discord import VoiceChannel
 from discord.ext.commands import Bot, Cog
 
 
@@ -66,7 +66,7 @@ class ClockChannel(Cog):
             clock_emoji: str = CLOCK_EMOJIS[emoji_name]
             channel_name: str = f"{clock_emoji} {time_to_display} UTC"
 
-            channel: TextChannel = await self.bot.fetch_channel(clock_channel_id)
+            channel: VoiceChannel = await self.bot.fetch_channel(clock_channel_id)
             await channel.edit(name=channel_name)
             await asyncio.sleep(60*5)
 

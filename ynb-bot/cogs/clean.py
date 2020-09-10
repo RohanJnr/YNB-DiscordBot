@@ -33,6 +33,14 @@ class Clean(Cog):
         reporting_channel: TextChannel = await self.bot.fetch_channel(self.bot.conf["BOT_STATS_ID"])
 
         while not self.bot.is_closed():
+            # wait for correct time before purging.
+            sleep_for: int = self.time_until_midnight()
+            minutes, seconds = divmod(sleep_for, 60)
+            hours, minutes = divmod(minutes, 60)
+            logger.info(f"Purging in {hours} hours {minutes} minutes.")
+            await reporting_channel.send(f"```Purging in {hours} hours {minutes} minutes.```")
+            await asyncio.sleep(sleep_for)
+
             logger.info("Purging Messages...")
 
             def filter_msgs(m: Message) -> bool:
@@ -70,16 +78,8 @@ class Clean(Cog):
                         file_object = File(fp=str(deleted_messages_file), filename="Deleted messages")
                         await reporting_channel.send(file=file_object)
 
-
             else:
                 await reporting_channel.send("0 Messages have been deleted.")
-
-            sleep_for: int = self.time_until_midnight()
-            minutes, seconds = divmod(sleep_for, 60)
-            hours, minutes = divmod(minutes, 60)
-            logger.info(f"Purging again in {hours} hours {minutes} minutes.")
-            await reporting_channel.send(f"```Purging again in {hours} hours {minutes} minutes.```")
-            await asyncio.sleep(sleep_for)
 
 
 def setup(bot: Bot) -> None:
