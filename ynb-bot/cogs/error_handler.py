@@ -15,11 +15,11 @@ class ErrorHandler(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         """Fires when a command throws an error."""
-        logger.error(str(error))
         if isinstance(error, commands.MissingRole):
             await ctx.send("You are not authorized to use this command.")
         else:
             await ctx.send(f"```{error}```")
+            raise error
 
 
 def setup(bot):
