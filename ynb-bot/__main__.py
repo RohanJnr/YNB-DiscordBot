@@ -3,7 +3,7 @@ from datetime import datetime
 from json import load
 from pathlib import Path
 
-
+from aiohttp import ClientSession
 from discord import Game
 from discord.ext.commands import Bot
 
@@ -21,9 +21,9 @@ formatter = logging.Formatter('{asctime} - {name} - {levelname} - {message}', st
 console_logging = logging.StreamHandler()
 console_logging.setFormatter(formatter)
 
-today = datetime.today()
+now = datetime.now().replace(microsecond=0).timestamp()
 
-log_file = Path("logs", f"logging{str(today)}.txt")
+log_file = Path("logs", f"logging{str(now)}.txt")
 
 log_file.parent.mkdir(exist_ok=True)
 
@@ -45,6 +45,7 @@ class YnbBot(Bot):
 
     def __init__(self, *args, **kwargs):
         self.conf = conf
+        self.http_session = ClientSession()
         super().__init__(
             command_prefix=".",
             case_insensitive=True,
@@ -66,9 +67,9 @@ class YnbBot(Bot):
         self.load_extension("ynb-bot.cogs.admin_cmds")
         self.load_extension("ynb-bot.cogs.clock_channel")
         self.load_extension("ynb-bot.cogs.events")
+        self.load_extension("ynb-bot.cogs.recruit")
 
         logger.info("Loading cogs... DONE\n")
-
         await self.change_presence(activity=Game(name="You Need Beer!"))
 
 

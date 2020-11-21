@@ -14,7 +14,6 @@ class Events(Cog):
 
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
-        self.emojis = None
 
     async def load_emojis(self):
         guild = self.bot.get_guild(self.bot.conf["GUILD_ID"])

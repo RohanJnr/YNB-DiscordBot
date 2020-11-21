@@ -52,7 +52,3 @@ class AdminCmds(Cog):
 def setup(bot: Bot) -> None:
     bot.add_cog(AdminCmds(bot))
     logger.info("Admin cmds Cog loaded.")
-
-
-
-
